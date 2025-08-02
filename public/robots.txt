@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://raghulkannan.dev/sitemap.xml
+
+# Disallow admin routes
+Disallow: /admin/
+Disallow: /api/admin/
+
+# Allow important pages
+Allow: /
+Allow: /projects
+Allow: /contact
+Allow: /api/projects
+Allow: /api/contact
+Allow: /api/resume
+
+# Crawl delay
+Crawl-delay: 1
