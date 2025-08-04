@@ -4,9 +4,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { theme, toggleTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -31,8 +33,8 @@ export default function Navbar() {
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
         scrolled 
-          ? 'py-4 bg-primary/98 backdrop-blur-xl border-b border-accent/20' 
-          : 'py-6 lg:py-8 bg-primary/80 backdrop-blur-sm'
+          ? 'py-4 glass-strong border-b border-border' 
+          : 'py-6 lg:py-8 glass'
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
@@ -48,9 +50,9 @@ export default function Navbar() {
               className="text-2xl font-light text-text-primary tracking-wide relative group"
             >
               <span className="text-text-primary">Kannan</span>
-              <span className="text-accent ml-2">studios</span>
+              <span className="text-text-secondary ml-2">studios</span>
               <motion.div
-                className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-accent to-accent-hover group-hover:w-full transition-all duration-500"
+                className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-500"
               />
             </Link>
           </motion.div>
@@ -61,22 +63,24 @@ export default function Navbar() {
               <motion.div key={item.path} className="relative">
                 <Link
                   href={item.path}
-                  className={`text-lg font-light transition-all duration-300 hover:text-accent relative group ${
-                    pathname === item.path ? 'text-accent' : 'text-text-primary'
+                  className={`text-lg font-light transition-all duration-300 relative group ${
+                    pathname === item.path 
+                      ? 'text-text-primary'
+                      : 'text-text-secondary hover:text-text-primary'
                   }`}
                 >
                   {item.name}
                   {pathname === item.path && (
                     <motion.div
                       layoutId="activeNavItem"
-                      className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-accent to-accent-hover"
+                      className="absolute -bottom-2 left-0 right-0 h-0.5 bg-accent"
                       initial={false}
                       transition={{ type: "spring", stiffness: 400, damping: 30 }}
                     />
                   )}
                   {pathname !== item.path && (
                     <motion.div
-                      className="absolute -bottom-2 left-0 w-0 h-0.5 bg-accent/60 group-hover:w-full transition-all duration-300"
+                      className="absolute -bottom-2 left-0 w-0 h-0.5 bg-text-secondary group-hover:w-full transition-all duration-300"
                     />
                   )}
                 </Link>
@@ -90,10 +94,57 @@ export default function Navbar() {
             >
               <Link
                 href="/contact"
-                className="px-6 py-3 bg-accent text-primary font-medium rounded hover:bg-accent-hover transition-all duration-300 shadow-lg hover:shadow-accent/25"
+                className="btn-primary"
               >
                 Let's Talk
               </Link>
+            </motion.div>
+
+            {/* Theme Toggle */}
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <button
+                onClick={toggleTheme}
+                className="p-3 glass rounded-lg border-border transition-all duration-300 flex items-center justify-center group"
+                title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              >
+                <div className="relative w-5 h-5 overflow-hidden">
+                  {/* Sun Icon */}
+                  <motion.svg
+                    initial={false}
+                    animate={{
+                      rotate: theme === 'light' ? 0 : 180,
+                      opacity: theme === 'light' ? 1 : 0,
+                    }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="absolute inset-0 w-5 h-5 text-text-primary transition-colors duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle cx="12" cy="12" r="5" />
+                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                  </motion.svg>
+                  
+                  {/* Moon Icon */}
+                  <motion.svg
+                    initial={false}
+                    animate={{
+                      rotate: theme === 'dark' ? 0 : -180,
+                      opacity: theme === 'dark' ? 1 : 0,
+                    }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="absolute inset-0 w-5 h-5 text-text-primary transition-colors duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                  </motion.svg>
+                </div>
+              </button>
             </motion.div>
 
             {/* Resume Download Icon */}
@@ -104,11 +155,11 @@ export default function Navbar() {
               <a
                 href="/resume.pdf"
                 download="Raghul_Kannan_Resume.pdf"
-                className="p-3 bg-secondary/80 hover:bg-tertiary border border-border hover:border-accent/50 rounded-lg transition-all duration-300 flex items-center justify-center group"
+                className="p-3 glass rounded-lg border-border transition-all duration-300 flex items-center justify-center group"
                 title="Download Resume"
               >
                 <svg 
-                  className="w-5 h-5 text-accent group-hover:text-accent-hover transition-colors duration-300" 
+                  className="w-5 h-5 text-text-primary group-hover:text-accent transition-colors duration-300"
                   fill="none" 
                   stroke="currentColor" 
                   viewBox="0 0 24 24"
@@ -130,20 +181,20 @@ export default function Navbar() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-3 rounded-lg bg-secondary/80 hover:bg-tertiary border border-border hover:border-accent/50 transition-all duration-300"
+              className="p-3 glass rounded-lg border-border transition-all duration-300"
             >
               <div className="w-6 h-6 flex flex-col justify-center items-center">
                 <motion.span
                   animate={isMenuOpen ? { rotate: 45, y: 3 } : { rotate: 0, y: 0 }}
-                  className="w-5 h-0.5 bg-accent block transition-all duration-300"
+                  className="w-5 h-0.5 bg-text-primary block transition-all duration-300"
                 />
                 <motion.span
                   animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }}
-                  className="w-5 h-0.5 bg-accent block mt-1.5 transition-all duration-300"
+                  className="w-5 h-0.5 bg-text-primary block mt-1.5 transition-all duration-300"
                 />
                 <motion.span
                   animate={isMenuOpen ? { rotate: -45, y: -3 } : { rotate: 0, y: 0 }}
-                  className="w-5 h-0.5 bg-accent block mt-1.5 transition-all duration-300"
+                  className="w-5 h-0.5 bg-text-primary block mt-1.5 transition-all duration-300"
                 />
               </div>
             </motion.button>
@@ -159,7 +210,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="md:hidden bg-primary/98 border-b border-accent/20 backdrop-blur-xl"
+            className="md:hidden glass-strong border-b border-border"
           >
             <div className="max-w-6xl mx-auto px-6 py-6">
               <div className="flex flex-col space-y-6">
@@ -174,7 +225,9 @@ export default function Navbar() {
                       href={item.path}
                       onClick={() => setIsMenuOpen(false)}
                       className={`text-lg font-light transition-all duration-300 py-2 block ${
-                        pathname === item.path ? 'text-accent' : 'text-text-primary hover:text-accent'
+                        pathname === item.path 
+                          ? 'text-text-primary'
+                          : 'text-text-secondary hover:text-text-primary'
                       }`}
                     >
                       {item.name}
@@ -192,32 +245,54 @@ export default function Navbar() {
                   <Link
                     href="/contact"
                     onClick={() => setIsMenuOpen(false)}
-                    className="inline-block px-6 py-3 bg-accent text-primary font-medium rounded hover:bg-accent-hover transition-all duration-300"
+                    className="btn-primary w-full justify-center"
                   >
                     Let's Talk
                   </Link>
                   
-                  <a
-                    href="/resume.pdf"
-                    download="Raghul_Kannan_Resume.pdf"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-secondary/80 text-accent border border-border hover:border-accent/50 rounded hover:bg-tertiary transition-all duration-300"
-                  >
-                    <svg 
-                      className="w-4 h-4" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => {
+                        toggleTheme();
+                        setIsMenuOpen(false);
+                      }}
+                      className="flex-1 btn-secondary justify-center"
                     >
-                      <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" 
-                      />
-                    </svg>
-                    Download Resume
-                  </a>
+                      {theme === 'light' ? (
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                      ) : (
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <circle cx="12" cy="12" r="5" />
+                          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                        </svg>
+                      )}
+                      {theme === 'light' ? 'Dark' : 'Light'}
+                    </button>
+                    
+                    <a
+                      href="/resume.pdf"
+                      download="Raghul_Kannan_Resume.pdf"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex-1 btn-secondary justify-center"
+                    >
+                      <svg 
+                        className="w-4 h-4" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                          strokeWidth={2} 
+                          d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" 
+                        />
+                      </svg>
+                      Resume
+                    </a>
+                  </div>
                 </motion.div>
               </div>
             </div>
