@@ -60,7 +60,7 @@ export default function ProtectedRoute({ children }) {
   }
 
   if (!isAuthenticated) {
-    return null; // Router will redirect
+    return null;
   }
 
   return children;

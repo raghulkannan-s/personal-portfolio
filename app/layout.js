@@ -1,7 +1,6 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
 import ErrorBoundary from './components/ErrorBoundary';
-import ScrollProgress from './components/ScrollProgress';
 import Navbar from './components/Navbar';
 import CustomCursor from './components/CustomCursor';
 import { ProjectsProvider } from './context/ProjectsContext';
@@ -43,7 +42,6 @@ export default function RootLayout({ children }) {
         <ErrorBoundary>
           <ThemeProvider>
             <CustomCursor />
-            <ScrollProgress />
             <Navbar />
             <ProjectsProvider>
               <main>
