@@ -83,15 +83,6 @@ function AdminDashboardContent() {
       iconBg: 'bg-green-500/20',
       textColor: 'text-green-400',
       badge: stats.unreadContacts > 0 ? stats.unreadContacts : null
-    },
-    {
-      title: 'Analytics',
-      description: 'View portfolio insights',
-      icon: '📊',
-      href: '/admin/analytics',
-      color: 'from-orange-500/10 to-orange-600/5',
-      iconBg: 'bg-orange-500/20',
-      textColor: 'text-orange-400'
     }
   ];
 

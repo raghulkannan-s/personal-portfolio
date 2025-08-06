@@ -1,16 +1,19 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '@/context/ThemeContext';
+import { useRouter, usePathname } from 'next/navigation';
+
 
 export default function Navbar() {
+  const router = useRouter();
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,6 +22,15 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+    const handleLogout = () => {
+    setIsLoggingOut(true);
+    localStorage.removeItem('adminToken');
+    setTimeout(() => {
+      router.push('/admin/login');
+    }, 800);
+    setIsLoggingOut(false);
+  };
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -31,11 +43,7 @@ export default function Navbar() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        scrolled 
-          ? 'py-4 glass-strong border-b border-border' 
-          : 'py-6 lg:py-8 glass'
-      }`}
+      className={`fixed top-0 w-full z-50 transition-all duration-500 py-4 glass-strong border-b border-border`}
     >
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between items-center">
@@ -86,19 +94,38 @@ export default function Navbar() {
                 </Link>
               </motion.div>
             ))}
-            
+
             {/* CTA Button */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link
-                href="/contact"
-                className="btn-primary"
-              >
-                Let's Talk
-              </Link>
-            </motion.div>
+            { pathname == "/admin" ? (<motion.button
+                  onClick={handleLogout}
+                  disabled={isLoggingOut}
+                  className="btn-primary"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  {isLoggingOut ? (
+                    <>
+                      <span className="font-medium">Logging out...</span>
+                    </>
+                    ) : (
+                    <>
+                      <span className="font-medium">Logout</span>
+                    </>
+                  )}
+                </motion.button>
+              ) : (
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Link
+                    href="/contact"
+                    className="btn-primary"
+                  >
+                    Let's Talk
+                  </Link>
+                </motion.div>
+              )}
 
             {/* Theme Toggle */}
             <motion.div
@@ -173,6 +200,7 @@ export default function Navbar() {
                 </svg>
               </a>
             </motion.div>
+            
           </div>
 
           {/* Mobile Menu Button */}
