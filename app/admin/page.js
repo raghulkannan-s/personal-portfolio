@@ -234,7 +234,7 @@ function AdminDashboardContent() {
                   </p>
                   
                   <div className="flex items-center mt-3 lg:mt-4 text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="text-xs lg:text-sm font-medium">Get started</span>
+                    <span className="text-xs lg:text-sm font-medium">Get started.</span>
                     <svg className="w-3 h-3 lg:w-4 lg:h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
