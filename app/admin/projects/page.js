@@ -200,7 +200,7 @@ function AdminProjectsContent() {
                   {/* Quick Actions Overlay */}
                   <div className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
                     <Link
-                      href={`/admin/projects/edit/${project._id}`}
+                      href={`/admin/projects/${project._id}/edit`}
                       className="p-2 bg-accent/90 hover:bg-accent text-primary rounded-lg transition-colors"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -271,7 +271,7 @@ function AdminProjectsContent() {
                   {/* Actions */}
                   <div className="flex gap-2">
                     <Link
-                      href={`/admin/projects/edit/${project._id}`}
+                      href={`/admin/projects/${project._id}/edit`}
                       className="flex-1 text-center py-2 bg-accent/10 text-accent rounded-lg hover:bg-accent/20 transition-colors text-sm font-medium"
                     >
                       Edit

@@ -525,7 +525,7 @@ export default function Home() {
                 </a>
                 
                 <a
-                  href="/resume.pdf"
+                  href="/raghul-kannan-cv.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`inline-flex items-center px-6 py-3 border rounded-2xl transition-all duration-300 font-medium text-sm gap-2 ${

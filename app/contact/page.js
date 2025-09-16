@@ -348,7 +348,7 @@ export default function Contact() {
                 Email Me Directly
               </a>
               <a
-                href="/resume.pdf"
+                href="/raghul-kannan-cv.pdf"
                 download="Raghul_Kannan_Resume.pdf"
                 className={`btn-secondary transition-all duration-500 ${
                   theme === 'light'

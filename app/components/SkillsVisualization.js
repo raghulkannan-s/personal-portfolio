@@ -10,17 +10,17 @@ export default function SkillsVisualization() {
     frontend: {
       title: 'Frontend',
       icon: '🎨',
-      skills: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'HTML5', 'CSS3', 'JavaScript']
+      skills: ['React', 'Next.js', 'TypeScript', 'JavaScript', 'React Native Expo', 'Tailwind CSS', 'HTML5', 'CSS3']
     },
     backend: {
       title: 'Backend',
       icon: '⚙️',
-      skills: ['Node.js', 'Express.js', 'MongoDB', 'PostgreSQL', 'REST APIs', 'GraphQL', 'Auth']
+      skills: ['Node.js', 'Express.js', 'MongoDB', 'Mongoose', 'PostgreSQL', 'Prisma', 'REST APIs', 'OAuth']
     },
     tools: {
       title: 'Tools',
       icon: '🛠️',
-      skills: ['Git', 'GitHub', 'VS Code', 'Figma', 'Vercel', 'Netlify', 'Docker']
+      skills: ['Git', 'GitHub', 'VS Code', 'Figma', 'Vercel', 'Netlify']
     }
   };
 
