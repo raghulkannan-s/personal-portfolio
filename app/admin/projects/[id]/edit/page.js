@@ -1,7 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-
+import Toast from "@/components/Toast";
 
 export default function EditProjectPage() {
   const { id } = useParams();
@@ -17,6 +17,9 @@ export default function EditProjectPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMsg, setToastMsg] = useState("");
+  const [toastType, setToastType] = useState("success");
   const inputClass =
     "w-full rounded-lg border border-gray-300 dark:border-white/10 bg-white dark:bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500";
 
@@ -88,8 +91,14 @@ export default function EditProjectPage() {
         })
       });
       if (!res.ok) throw new Error("Update failed");
+      setToastType("success");
+      setToastMsg("Project updated successfully");
+      setToastVisible(true);
     } catch (e) {
       setError(e.message || "Error");
+      setToastType("error");
+      setToastMsg(e.message || "Update failed");
+      setToastVisible(true);
     } finally {
       setSaving(false);
     }
@@ -109,7 +118,13 @@ export default function EditProjectPage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 py-16">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <Toast
+        isVisible={toastVisible}
+        message={toastMsg}
+        type={toastType}
+        onClose={() => setToastVisible(false)}
+      />
       <h1 className="text-3xl sm:text-4xl tracking-tight mb-8 bg-black bg-clip-text text-transparent">
         Edit Project
       </h1>

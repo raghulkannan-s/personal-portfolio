@@ -15,7 +15,6 @@ export default function Projects() {
   
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [filter, setFilter] = useState('all');
-  const [selectedProject, setSelectedProject] = useState(null);
 
   // Check if projects are already loaded (instant loading)
   const hasProjects = projects.length > 0;
@@ -117,18 +116,22 @@ export default function Projects() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
-                      className="group cursor-pointer"
-                      onClick={() => setSelectedProject(project)}
+                      className="group"
                     >
-                      <div className="card card-interactive">
+                      <div className="card card-interactive rounded-2xl overflow-hidden transition-transform duration-300 hover:-translate-y-1">
                         {/* Project Image */}
-                        <div className="relative h-64 bg-secondary overflow-hidden rounded-xl mb-6">
+                        <div className="relative aspect-[16/10] w-full bg-secondary overflow-hidden rounded-2xl mb-6">
                           {project.image ? (
-                            <img 
-                              src={project.image} 
-                              alt={project.title}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                            />
+                            <>
+                              <img
+                                src={project.image}
+                                alt={`${project.title} preview`}
+                                loading="lazy"
+                                decoding="async"
+                                className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                              />
+                              <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                            </>
                           ) : (
                             <div className="w-full h-full flex items-center justify-center">
                               <div className="w-16 h-16 bg-tertiary rounded-2xl flex items-center justify-center">
@@ -136,10 +139,10 @@ export default function Projects() {
                               </div>
                             </div>
                           )}
-                          
+
                           {/* Featured Badge */}
                           {project.featured && (
-                            <div className="absolute top-4 right-4">
+                            <div className="absolute top-4 right-4 z-20">
                               <span className="px-3 py-1 bg-accent text-text-inverse text-xs font-medium rounded-full">
                                 Featured
                               </span>
@@ -147,7 +150,7 @@ export default function Projects() {
                           )}
 
                           {/* Quick Actions */}
-                          <div className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 space-y-2">
+                          <div className="absolute top-4 left-4 z-20 opacity-0 group-hover:opacity-100 transition-all duration-300 space-y-2">
                             {project.liveUrl && (
                               <a
                                 href={project.liveUrl}
@@ -235,12 +238,18 @@ export default function Projects() {
                               )}
                             </div>
                             
-                            <button className="text-accent hover:text-accent-hover text-sm font-medium transition-colors duration-300 flex items-center gap-1">
+                            <a
+                              href={project.liveUrl || project.githubUrl || '#'}
+                              target={project.liveUrl || project.githubUrl ? '_blank' : undefined}
+                              rel={project.liveUrl || project.githubUrl ? 'noopener noreferrer' : undefined}
+                              onClick={(e) => { if (!(project.liveUrl || project.githubUrl)) e.preventDefault(); }}
+                              className="text-accent hover:text-accent-hover text-sm font-medium transition-colors duration-300 flex items-center gap-1"
+                            >
                               View Details
                               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                               </svg>
-                            </button>
+                            </a>
                           </div>
                         </div>
                       </div>
@@ -295,7 +304,7 @@ export default function Projects() {
           </section>
         </div>
       </InstantLoader>
-      
+
       <ProjectsLoadingIndicator visible={loading && hasProjects} />
     </>
   );

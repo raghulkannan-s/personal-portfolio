@@ -3,7 +3,7 @@ import Project from '@/models/Project';
 
 
 export async function GET(request, { params }) {
-    const id = await params.id;
+    const { id } = await params;
   try {
     await dbConnect();
     const project = await Project.findById(id);

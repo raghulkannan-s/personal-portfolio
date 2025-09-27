@@ -72,7 +72,7 @@ export default function CustomCursor() {
     <>
       {/* Main cursor */}
       <div
-        className={`fixed pointer-events-none z-[9999] transition-all duration-150 ease-out ${
+        className={`fixed pointer-events-none z-[9999] transition-all hidden md:block duration-150 ease-out ${
           theme === 'light' ? 'cursor-light' : 'cursor-dark'
         }`}
         style={{

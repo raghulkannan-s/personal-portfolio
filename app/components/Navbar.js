@@ -209,20 +209,20 @@ export default function Navbar() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-3 glass rounded-lg border-border transition-all duration-300"
+              className="p-2 glass rounded-lg border-border transition-all duration-300"
             >
               <div className="w-6 h-6 flex flex-col justify-center items-center">
                 <motion.span
                   animate={isMenuOpen ? { rotate: 45, y: 3 } : { rotate: 0, y: 0 }}
-                  className="w-5 h-0.5 bg-text-primary block transition-all duration-300"
+                  className="w-5 h-0.5 bg-white dark:bg-gray-600 block transition-all duration-300"
                 />
                 <motion.span
                   animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }}
-                  className="w-5 h-0.5 bg-text-primary block mt-1.5 transition-all duration-300"
+                  className="w-5 h-0.5 bg-white dark:bg-gray-600 block mt-1.5 transition-all duration-300"
                 />
                 <motion.span
                   animate={isMenuOpen ? { rotate: -45, y: -3 } : { rotate: 0, y: 0 }}
-                  className="w-5 h-0.5 bg-text-primary block mt-1.5 transition-all duration-300"
+                  className="w-5 h-0.5 bg-white dark:bg-gray-600 block mt-1.5 transition-all duration-300"
                 />
               </div>
             </motion.button>

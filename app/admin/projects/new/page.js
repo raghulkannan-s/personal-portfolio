@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "@/components/Toast";
 
 export default function NewProjectPage() {
   const [title, setTitle] = useState("");
@@ -69,6 +70,7 @@ export default function NewProjectPage() {
         }),
       });
       if (!res.ok) throw new Error("Failed to create project");
+      toast.success("Project created successfully");
       router.push("/admin/projects");
     } catch (err) {
       setError(err.message || "Error");
